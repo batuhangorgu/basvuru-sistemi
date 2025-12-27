@@ -1,23 +1,102 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Başvuru Takip</title>
+<meta charset="UTF-8">
+<title>Başvuru Takip</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f4f8;
+}
+.container{
+    max-width:420px;
+    margin:60px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.1);
+}
+h2{ text-align:center; color:#004a99; }
+label{ font-weight:bold; }
+input{
+    width:100%;
+    padding:12px;
+    margin:8px 0 15px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+button{
+    width:100%;
+    padding:14px;
+    background:#004a99;
+    color:white;
+    border:none;
+    border-radius:6px;
+}
+.msg{
+    margin-top:15px;
+    padding:12px;
+    border-radius:6px;
+    display:none;
+}
+.success{ background:#e9f2ff; color:#004a99; }
+.error{ background:#ffe9e9; color:#a40000; }
+a{ color:#004a99; text-decoration:none; }
+</style>
 </head>
+
 <body>
 
+<div class="container">
 <h2>Başvuru Takip</h2>
 
-<label>T.C. Kimlik No:</label><br>
-<input type="text" placeholder="T.C. Kimlik No"><br><br>
+<label>T.C. Kimlik No</label>
+<input type="text" id="tc" maxlength="11" placeholder="11 haneli TC">
 
-<button>Sorgula</button>
+<label>Kayıt Numarası</label>
+<input type="text" id="kayit" maxlength="8" placeholder="8 haneli kayıt no">
 
-<p>Başvuru Durumu: İnceleniyor</p>
+<button onclick="sorgula()">Sorgula</button>
+
+<div class="msg" id="mesaj"></div>
 
 <br>
+<a href="index.html">← Ana Sayfa</a>
+</div>
 
-<a href="index.html">Ana Sayfaya Dön</a>
+<script>
+function sorgula(){
+    const tc = document.getElementById("tc").value;
+    const kayit = document.getElementById("kayit").value;
+    const mesaj = document.getElementById("mesaj");
+
+    if(tc.length !== 11){
+        alert("TC Kimlik No 11 haneli olmalıdır!");
+        return;
+    }
+
+    if(kayit.length !== 8){
+        alert("Kayıt numarası 8 haneli olmalıdır!");
+        return;
+    }
+
+    const kayitliTC = localStorage.getItem("tc");
+    const kayitliNo = localStorage.getItem("kayitNo");
+
+    mesaj.style.display = "block";
+
+    if(tc === kayitliTC && kayit === kayitliNo){
+        mesaj.className = "msg success";
+        mesaj.innerHTML =
+          "<b>Başvurunuz Onaylandı</b><br>" +
+          "Kartınız 3 iş günü içinde teslim edilecektir.";
+    } else {
+        mesaj.className = "msg error";
+        mesaj.innerHTML = "Girilen bilgilere ait kayıt bulunamadı.";
+    }
+}
+</script>
 
 </body>
 </html>
