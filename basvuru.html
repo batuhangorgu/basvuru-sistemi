@@ -1,26 +1,88 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Başvuru Yap</title>
+<meta charset="UTF-8">
+<title>Başvuru Yap</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f4f8;
+}
+.container{
+    max-width:420px;
+    margin:60px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.1);
+}
+h2{ text-align:center; color:#004a99; }
+label{ font-weight:bold; }
+input{
+    width:100%;
+    padding:12px;
+    margin:8px 0 15px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+button{
+    width:100%;
+    padding:14px;
+    background:#ff8c00;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+}
+.result{
+    margin-top:15px;
+    padding:12px;
+    background:#e9ffe9;
+    border-radius:6px;
+    display:none;
+}
+a{ color:#004a99; text-decoration:none; }
+</style>
 </head>
+
 <body>
 
+<div class="container">
 <h2>Başvuru Formu</h2>
 
-<form>
-  <label>Ad Soyad:</label><br>
-  <input type="text" placeholder="Ad Soyad"><br><br>
+<label>T.C. Kimlik No</label>
+<input type="text" id="tc" maxlength="11" placeholder="11 haneli TC">
 
-  <label>T.C. Kimlik No:</label><br>
-  <input type="text" placeholder="T.C. Kimlik No"><br><br>
+<button onclick="basvur()">Başvuruyu Tamamla</button>
 
-  <button type="submit">Başvuruyu Gönder</button>
-</form>
+<div class="result" id="sonuc"></div>
 
 <br>
+<a href="index.html">← Ana Sayfa</a>
+</div>
 
-<a href="index.html">Ana Sayfaya Dön</a>
+<script>
+function basvur(){
+    const tc = document.getElementById("tc").value;
+    const sonuc = document.getElementById("sonuc");
+
+    if(tc.length !== 11){
+        alert("TC Kimlik No 11 haneli olmalıdır!");
+        return;
+    }
+
+    const kayitNo = Math.floor(10000000 + Math.random() * 90000000);
+
+    localStorage.setItem("tc", tc);
+    localStorage.setItem("kayitNo", kayitNo);
+
+    sonuc.style.display = "block";
+    sonuc.innerHTML =
+        "<b>Başvurunuz Alındı</b><br>" +
+        "Kayıt Numaranız: <b>" + kayitNo + "</b>";
+}
+</script>
 
 </body>
 </html>
