@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Başvuru ve Takibi</title>
+<style>
+body { font-family: Arial; background:#f5f5f5; }
+.ist-container { max-width:450px; margin:20px auto; background:#fff; border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,.1); border-top:5px solid #0054a6; }
+.ist-tabs { display:flex; background:#f0f0f0 }
+.ist-tab { flex:1; padding:15px; border:none; background:none; font-weight:bold; cursor:pointer }
+.ist-tab.active { background:#fff; color:#0054a6 }
+.ist-content { padding:25px; display:none }
+.ist-content.active { display:block }
+.form-group { margin-bottom:15px }
+input { width:100%; padding:12px; margin-bottom:10px }
+button { width:100%; padding:12px }
+.msg { margin-top:10px; display:none }
+</style>
+</head>
+
+<body>
+
+<div class="ist-container">
+    <div class="ist-tabs">
+        <button class="ist-tab active" onclick="tab(1)">KART BAŞVURU</button>
+        <button class="ist-tab" onclick="tab(2)">BAŞVURU TAKİP</button>
+    </div>
+
+    <div id="b1" class="ist-content active">
+        <input id="ad" placeholder="Ad Soyad">
+        <input id="tc" placeholder="TC Kimlik No">
+        <button onclick="basvur()">BAŞVUR</button>
+        <div id="sonuc" class="msg"></div>
+    </div>
+
+    <div id="b2" class="ist-content">
+        <input id="tc2" placeholder="TC Kimlik No">
+        <input id="no" placeholder="Başvuru No">
+        <button onclick="sorgula()">SORGULA</button>
+        <div id="sonuc2" class="msg"></div>
+    </div>
+</div>
+
+<script>
+function tab(x){
+    document.getElementById("b1").style.display = x==1?"block":"none";
+    document.getElementById("b2").style.display = x==2?"block":"none";
+}
+function basvur(){
+    let no="IST"+Math.floor(Math.random()*90000);
+    localStorage.setItem("tc",tc.value);
+    localStorage.setItem("no",no);
+    sonuc.innerHTML="Başvuru No: <b>"+no+"</b>";
+    sonuc.style.display="block";
+}
+function sorgula(){
+    if(tc2.value==localStorage.getItem("tc") && no.value==localStorage.getItem("no")){
+        sonuc2.innerHTML="Başvurunuz onaylandı";
+    } else {
+        sonuc2.innerHTML="Kayıt bulunamadı";
+    }
+    sonuc2.style.display="block";
+}
+</script>
+
+</body>
+</html>
