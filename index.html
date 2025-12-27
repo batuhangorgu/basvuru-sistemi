@@ -1,25 +1,100 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Başvuru Sistemi</title>
+<meta charset="UTF-8">
+<title>Online Başvuru Sistemi</title>
+
+<style>
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #e9f0ff, #f7f9fc);
+}
+
+/* Ana Kart */
+.container{
+    max-width:460px;
+    margin:90px auto;
+    background:#ffffff;
+    padding:35px;
+    border-radius:14px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.12);
+    text-align:center;
+}
+
+/* Başlık */
+h1{
+    color:#004a99;
+    margin-bottom:10px;
+    font-size:26px;
+}
+
+.subtitle{
+    color:#666;
+    font-size:15px;
+    margin-bottom:30px;
+}
+
+/* Butonlar */
+.btn{
+    width:100%;
+    padding:16px;
+    font-size:16px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    color:#fff;
+    margin-bottom:15px;
+    transition:0.3s;
+}
+
+.btn-basvuru{
+    background:#ff8c00;
+}
+
+.btn-takip{
+    background:#004a99;
+}
+
+.btn:hover{
+    transform: translateY(-2px);
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Alt Bilgi */
+.footer{
+    margin-top:25px;
+    font-size:12px;
+    color:#999;
+}
+</style>
 </head>
+
 <body>
 
-<h1>Online Başvuru Sistemi</h1>
-<p>Lütfen yapmak istediğiniz işlemi seçiniz.</p>
+<div class="container">
+    <h1>Online Başvuru Sistemi</h1>
+    <div class="subtitle">
+        Kart başvuru ve başvuru takip işlemlerinizi<br>
+        aşağıdaki seçeneklerden gerçekleştirebilirsiniz.
+    </div>
 
-<br>
+    <a href="basvuru.html">
+        <button class="btn btn-basvuru">📝 Başvuru Yap</button>
+    </a>
 
-<a href="basvuru.html">
-  <button>Başvuru Yap</button>
-</a>
+    <a href="takip.html">
+        <button class="btn btn-takip">🔍 Başvuru Takip</button>
+    </a>
 
-<br><br>
-
-<a href="takip.html">
-  <button>Başvuru Takip Et</button>
-</a>
+    <div class="footer">
+        * Bu sistem eğitim amaçlı demo uygulamadır.
+    </div>
+</div>
 
 </body>
 </html>
