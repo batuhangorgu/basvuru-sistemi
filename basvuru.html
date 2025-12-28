@@ -2,28 +2,36 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Başvuru Yap</title>
+<title>İstanbulkart Başvuru</title>
 
 <style>
 body{
+    margin:0;
     font-family: Arial, Helvetica, sans-serif;
     background:#f2f4f8;
-    margin:0;
 }
 
 .container{
-    max-width:420px;
+    max-width:460px;
     margin:70px auto;
     background:#ffffff;
     padding:30px;
-    border-radius:12px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.12);
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.back-btn{
+    display:inline-block;
+    margin-bottom:20px;
+    color:#004a99;
+    text-decoration:none;
+    font-size:14px;
 }
 
 h2{
     text-align:center;
     color:#004a99;
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 label{
@@ -36,14 +44,14 @@ input{
     padding:12px;
     margin-top:6px;
     margin-bottom:15px;
-    border-radius:6px;
+    border-radius:8px;
     border:1px solid #ccc;
     font-size:14px;
 }
 
 button{
     width:100%;
-    padding:14px;
+    padding:15px;
     background:#ff8c00;
     color:white;
     border:none;
@@ -57,23 +65,13 @@ button:hover{
 }
 
 .result{
-    margin-top:15px;
-    padding:12px;
-    background:#e9ffe9;
-    border-radius:6px;
     display:none;
+    margin-top:20px;
+    padding:15px;
+    background:#e9f2ff;
+    border-radius:8px;
     font-size:14px;
-}
-
-.back{
-    text-align:center;
-    margin-top:15px;
-}
-
-a{
     color:#004a99;
-    text-decoration:none;
-    font-size:14px;
 }
 </style>
 </head>
@@ -81,24 +79,34 @@ a{
 <body>
 
 <div class="container">
-<h2>Kart Başvuru Formu</h2>
+
+<a class="back-btn" href="https://batuhangorgu.wordpress.com/2025/12/27/basvuru-ve-takibi/">
+← Geri Dön
+</a>
+
+<h2>İstanbulkart Başvuru Formu</h2>
 
 <label>Ad Soyad</label>
 <input type="text" id="adsoyad" placeholder="Ad Soyad">
 
 <label>T.C. Kimlik No</label>
-<input type="text" id="tc" maxlength="11" placeholder="11 haneli TC">
+<input type="text" id="tc" maxlength="11" placeholder="11 haneli TC Kimlik No">
 
 <button onclick="basvur()">Başvuruyu Tamamla</button>
 
 <div class="result" id="sonuc"></div>
 
-<div class="back">
-    <a href="index.html">← Ana Sayfa</a>
-</div>
 </div>
 
 <script>
+function randomNumber(length){
+    let result = "";
+    for(let i = 0; i < length; i++){
+        result += Math.floor(Math.random() * 10);
+    }
+    return result;
+}
+
 function basvur(){
     const adsoyad = document.getElementById("adsoyad").value.trim();
     const tc = document.getElementById("tc").value.trim();
@@ -110,23 +118,28 @@ function basvur(){
     }
 
     if(tc.length !== 11){
-        alert("TC Kimlik No 11 haneli olmalıdır!");
+        alert("TC Kimlik No 11 haneli olmalıdır.");
         return;
     }
 
-    // 8 haneli kayıt numarası
-    const kayitNo = Math.floor(10000000 + Math.random() * 90000000);
+    // 16 haneli İstanbulkart numarası
+    const istanbulKartNo = randomNumber(16);
 
-    // Bilgileri kaydet
+    // IST + 5 haneli random kayıt no (toplam 8)
+    const kayitNo = "IST" + randomNumber(5);
+
+    // Kaydet
     localStorage.setItem("adsoyad", adsoyad);
     localStorage.setItem("tc", tc);
+    localStorage.setItem("istanbulKartNo", istanbulKartNo);
     localStorage.setItem("kayitNo", kayitNo);
 
     sonuc.style.display = "block";
     sonuc.innerHTML =
-        "<b>Başvurunuz Alındı</b><br>" +
+        "<b>Başvurunuz Başarıyla Alındı</b><br><br>" +
         "Ad Soyad: <b>" + adsoyad + "</b><br>" +
-        "Kayıt Numaranız: <b>" + kayitNo + "</b>";
+        "İstanbulkart No: <b>" + istanbulKartNo + "</b><br>" +
+        "Başvuru Kayıt No: <b>" + kayitNo + "</b>";
 }
 </script>
 
