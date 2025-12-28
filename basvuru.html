@@ -20,12 +20,16 @@ body{
     box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
 
-.back-btn{
-    display:inline-block;
+.top-buttons{
+    display:flex;
+    justify-content:space-between;
     margin-bottom:20px;
+}
+
+.top-buttons a{
+    font-size:14px;
     color:#004a99;
     text-decoration:none;
-    font-size:14px;
 }
 
 h2{
@@ -80,9 +84,15 @@ button:hover{
 
 <div class="container">
 
-<a class="back-btn" href="https://batuhangorgu.wordpress.com/2025/12/27/basvuru-ve-takibi/">
-← Geri Dön
-</a>
+<div class="top-buttons">
+    <a href="https://batuhangorgu.wordpress.com/2025/12/27/basvuru-ve-takibi/">
+        ← Geri Dön
+    </a>
+
+    <a href="index.html">
+        🏠 Anasayfa
+    </a>
+</div>
 
 <h2>İstanbulkart Başvuru Formu</h2>
 
@@ -122,13 +132,9 @@ function basvur(){
         return;
     }
 
-    // 16 haneli İstanbulkart numarası
     const istanbulKartNo = randomNumber(16);
-
-    // IST + 5 haneli random kayıt no (toplam 8)
     const kayitNo = "IST" + randomNumber(5);
 
-    // Kaydet
     localStorage.setItem("adsoyad", adsoyad);
     localStorage.setItem("tc", tc);
     localStorage.setItem("istanbulKartNo", istanbulKartNo);
