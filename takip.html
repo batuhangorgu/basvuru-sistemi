@@ -2,98 +2,145 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Başvuru Takip</title>
+<title>Başvuru Takibi</title>
 
 <style>
 body{
-    font-family: Arial;
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
     background:#f2f4f8;
 }
+
 .container{
-    max-width:420px;
-    margin:60px auto;
-    background:white;
+    max-width:460px;
+    margin:70px auto;
+    background:#ffffff;
     padding:30px;
-    border-radius:10px;
-    box-shadow:0 6px 15px rgba(0,0,0,0.1);
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
-h2{ text-align:center; color:#004a99; }
-label{ font-weight:bold; }
+
+.top-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.top-buttons a{
+    font-size:14px;
+    color:#004a99;
+    text-decoration:none;
+}
+
+h2{
+    text-align:center;
+    color:#004a99;
+    margin-bottom:25px;
+}
+
+label{
+    font-weight:bold;
+    font-size:14px;
+}
+
 input{
     width:100%;
     padding:12px;
-    margin:8px 0 15px 0;
+    margin-top:6px;
+    margin-bottom:15px;
+    border-radius:8px;
     border:1px solid #ccc;
-    border-radius:6px;
+    font-size:14px;
 }
+
 button{
     width:100%;
-    padding:14px;
-    background:#004a99;
+    padding:15px;
+    background:#ff8c00;
     color:white;
     border:none;
-    border-radius:6px;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
 }
-.msg{
-    margin-top:15px;
-    padding:12px;
-    border-radius:6px;
+
+button:hover{
+    opacity:0.9;
+}
+
+.result{
     display:none;
+    margin-top:20px;
+    padding:15px;
+    background:#e9f2ff;
+    border-radius:8px;
+    font-size:14px;
+    color:#004a99;
 }
-.success{ background:#e9f2ff; color:#004a99; }
-.error{ background:#ffe9e9; color:#a40000; }
-a{ color:#004a99; text-decoration:none; }
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h2>Başvuru Takip</h2>
+
+<div class="top-buttons">
+    <a href="https://batuhangorgu.wordpress.com/2025/12/27/basvuru-ve-takibi/">← Geri Dön</a>
+    <a href="index.html">🏠 Anasayfa</a>
+</div>
+
+<h2>Başvuru Takibi</h2>
+
+<label>Başvuru Kayıt No</label>
+<input type="text" id="kayitNo" maxlength="8" placeholder="IST12345">
 
 <label>T.C. Kimlik No</label>
 <input type="text" id="tc" maxlength="11" placeholder="11 haneli TC">
 
-<label>Kayıt Numarası</label>
-<input type="text" id="kayit" maxlength="8" placeholder="8 haneli kayıt no">
+<button onclick="kontrolEt()">Başvuruyu Sorgula</button>
 
-<button onclick="sorgula()">Sorgula</button>
+<div class="result" id="sonuc"></div>
 
-<div class="msg" id="mesaj"></div>
-
-<br>
-<a href="index.html">← Ana Sayfa</a>
 </div>
 
 <script>
-function sorgula(){
-    const tc = document.getElementById("tc").value;
-    const kayit = document.getElementById("kayit").value;
-    const mesaj = document.getElementById("mesaj");
+function kontrolEt(){
+    const girilenKayit = document.getElementById("kayitNo").value.trim().toUpperCase();
+    const girilenTC = document.getElementById("tc").value.trim();
+    const sonuc = document.getElementById("sonuc");
 
-    if(tc.length !== 11){
-        alert("TC Kimlik No 11 haneli olmalıdır!");
+    const kayitNo = localStorage.getItem("kayitNo");
+    const tc = localStorage.getItem("tc");
+    const adsoyad = localStorage.getItem("adsoyad");
+    const kartNo = localStorage.getItem("istanbulKartNo");
+
+    // 🔴 8 karakter kontrolü
+    if(girilenKayit.length !== 8){
+        alert("Başvuru Kayıt No 8 karakter olmalıdır.");
         return;
     }
 
-    if(kayit.length !== 8){
-        alert("Kayıt numarası 8 haneli olmalıdır!");
+    // 🔴 IST ile başlama kontrolü
+    if(!girilenKayit.startsWith("IST")){
+        alert("Başvuru Kayıt No 'IST' ile başlamalıdır.");
         return;
     }
 
-    const kayitliTC = localStorage.getItem("tc");
-    const kayitliNo = localStorage.getItem("kayitNo");
+    // 🔴 TC kontrolü
+    if(girilenTC.length !== 11){
+        alert("TC Kimlik No 11 haneli olmalıdır.");
+        return;
+    }
 
-    mesaj.style.display = "block";
-
-    if(tc === kayitliTC && kayit === kayitliNo){
-        mesaj.className = "msg success";
-        mesaj.innerHTML =
-          "<b>Başvurunuz Onaylandı</b><br>" +
-          "Kartınız 3 iş günü içinde teslim edilecektir.";
-    } else {
-        mesaj.className = "msg error";
-        mesaj.innerHTML = "Girilen bilgilere ait kayıt bulunamadı.";
+    if(girilenKayit === kayitNo && girilenTC === tc){
+        sonuc.style.display = "block";
+        sonuc.innerHTML =
+            "<b>Başvuru Bulundu</b><br><br>" +
+            "Ad Soyad: <b>" + adsoyad + "</b><br>" +
+            "İstanbulkart No: <b>" + kartNo + "</b><br><br>" +
+            "<b>Başvurunuz 3 iş günü içerisinde teslim edilecektir.</b>";
+    }else{
+        alert("Başvuru bulunamadı. Bilgileri kontrol ediniz.");
     }
 }
 </script>
